@@ -1,0 +1,10 @@
+{
+  "name": "carousel-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Instagram carousel habit tracker with PWA + zero-setup cloud sync (Netlify Blobs).",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

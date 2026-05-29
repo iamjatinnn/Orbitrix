@@ -1,0 +1,14 @@
+# Netlify config for Carousel Tracker
+[build]
+  # Static site files live in the repo root
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Nice short URL for the sync API (Functions v2 also sets this via config.path)
+[[redirects]]
+  from = "/api/sync"
+  to = "/.netlify/functions/sync"
+  status = 200

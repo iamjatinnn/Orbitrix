@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Carousel Tracker — Creator Dashboard</title>
+<meta name="theme-color" content="#7c5cff" />
+<link rel="manifest" href="./manifest.json" />
+<link rel="apple-touch-icon" href="./icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Carousels" />
+<style>
+  :root{
+    --bg:#0b0d12;--bg2:#11141c;--card:#161a24;--card2:#1c2230;--line:#262d3d;
+    --txt:#e8ebf2;--mut:#8b93a7;--accent:#7c5cff;--accent2:#ff5c8a;
+    --grad:linear-gradient(135deg,#7c5cff 0%,#ff5c8a 60%,#ff9d5c 100%);
+    --green:#34d399;--blue:#38bdf8;--amber:#fbbf24;--red:#f87171;
+    --radius:18px;--shadow:0 10px 40px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1100px 600px at 85% -10%, rgba(124,92,255,.18), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(255,92,138,.14), transparent 55%),
+      var(--bg);
+    color:var(--txt);min-height:100vh;padding:18px;line-height:1.5;
+    padding-top:max(18px, env(safe-area-inset-top));
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+  header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:22px;}
+  .brand{display:flex;align-items:center;gap:14px;}
+  .logo{width:52px;height:52px;border-radius:15px;background:var(--grad);display:grid;place-items:center;box-shadow:0 8px 24px rgba(124,92,255,.45);flex-shrink:0;}
+  .logo svg{width:28px;height:28px;}
+  .brand h1{font-size:21px;font-weight:800;letter-spacing:-.3px;}
+  .brand p{font-size:12.5px;color:var(--mut);}
+  .head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .streak-pill{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px;}
+  .streak-pill .fire{font-size:18px;}
+  .icon-btn{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:10px 14px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.15s;}
+  .icon-btn:hover{border-color:var(--accent);}
+  .icon-btn.live{border-color:var(--green);}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--mut);}
+  .dot.on{background:var(--green);box-shadow:0 0 8px var(--green);}
+  .dot.err{background:var(--red);}
+  #installBtn{display:none;background:var(--grad);border:none;box-shadow:0 6px 18px rgba(124,92,255,.4);}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;}
+  .stat{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px 14px;position:relative;overflow:hidden;}
+  .stat::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--grad);opacity:.9;}
+  .stat .ico{font-size:20px;margin-bottom:8px;display:block;}
+  .stat .num{font-size:27px;font-weight:800;letter-spacing:-.5px;}
+  .stat .lbl{font-size:12px;color:var(--mut);margin-top:2px;}
+  .stat .sub{font-size:11px;color:var(--green);margin-top:6px;font-weight:600;}
+  .goal-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:18px;box-shadow:var(--shadow);}
+  .goal-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+  .goal-top h2{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px;}
+  .goal-edit{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mut);}
+  .goal-edit input{width:64px;background:var(--bg2);border:1px solid var(--line);color:var(--txt);padding:6px 8px;border-radius:8px;font-size:14px;font-weight:700;text-align:center;outline:none;}
+  .goal-edit input:focus{border-color:var(--accent);}
+  .pbar{height:14px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;overflow:hidden;}
+  .pfill{height:100%;background:var(--grad);width:0;border-radius:999px;transition:width .5s ease;}
+  .goal-meta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mut);margin-top:8px;}
+  .goal-meta b{color:var(--txt);}
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
+  .panel h2{font-size:15px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+  .panel .hint{font-size:12px;color:var(--mut);margin-bottom:16px;}
+  .field{margin-bottom:13px;}
+  .field label{display:block;font-size:12px;color:var(--mut);margin-bottom:6px;font-weight:600;}
+  .field input, .field select, .field textarea{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--txt);padding:11px 13px;border-radius:11px;font-size:14px;font-family:inherit;outline:none;transition:border .15s,box-shadow .15s;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,92,255,.18);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .row3{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  textarea{resize:vertical;min-height:46px;}
+  .btn{width:100%;background:var(--grad);color:#fff;border:none;padding:13px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;box-shadow:0 8px 22px rgba(124,92,255,.35);transition:transform .12s,filter .12s;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn:active{transform:scale(.98);}
+  .btn.sec{background:var(--card2);color:var(--txt);border:1px solid var(--line);box-shadow:none;}
+  .chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .bars{display:flex;align-items:flex-end;gap:6px;height:130px;padding-top:8px;}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;}
+  .bar{width:100%;max-width:34px;background:var(--grad);border-radius:7px 7px 3px 3px;min-height:4px;transition:height .4s ease;position:relative;}
+  .bar:hover::after{content:attr(data-v);position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:#000;color:#fff;font-size:11px;padding:2px 7px;border-radius:6px;white-space:nowrap;}
+  .bar-col span{font-size:10.5px;color:var(--mut);}
+  .lc-tabs{display:flex;gap:6px;margin-bottom:12px;}
+  .lc-tab{font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:var(--mut);cursor:pointer;}
+  .lc-tab.active{background:var(--card2);color:var(--txt);border-color:var(--accent);}
+  .lc-wrap{position:relative;}
+  svg.lc{width:100%;height:170px;display:block;overflow:visible;}
+  .lc-legend{font-size:11.5px;color:var(--mut);margin-top:8px;text-align:center;}
+  .mini-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:8px;}
+  .mini{background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:12px;text-align:center;}
+  .mini .v{font-size:18px;font-weight:800;}
+  .mini .k{font-size:10.5px;color:var(--mut);margin-top:2px;}
+  .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+  .toolbar input{flex:1;min-width:140px;background:var(--bg2);border:1px solid var(--line);color:var(--txt);padding:9px 12px;border-radius:10px;font-size:13px;outline:none;}
+  .toolbar select{background:var(--bg2);border:1px solid var(--line);color:var(--txt);padding:9px 10px;border-radius:10px;font-size:13px;}
+  .list{display:flex;flex-direction:column;gap:10px;max-height:460px;overflow-y:auto;padding-right:4px;}
+  .list::-webkit-scrollbar{width:8px;}
+  .list::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px;}
+  .item{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:13px 14px;display:flex;gap:12px;align-items:flex-start;}
+  .item .thumb{width:40px;height:40px;border-radius:10px;background:var(--card2);display:grid;place-items:center;font-size:18px;flex-shrink:0;border:1px solid var(--line);}
+  .item .body{flex:1;min-width:0;}
+  .item .ttl{font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .tag{font-size:10px;padding:2px 8px;border-radius:999px;background:var(--card2);color:var(--mut);border:1px solid var(--line);font-weight:700;}
+  .item .meta{font-size:12px;color:var(--mut);margin-top:3px;display:flex;gap:14px;flex-wrap:wrap;}
+  .item .meta b{color:var(--txt);}
+  .item .del{background:none;border:none;color:var(--mut);cursor:pointer;font-size:17px;padding:2px 4px;line-height:1;}
+  .item .del:hover{color:var(--red);}
+  .empty{text-align:center;color:var(--mut);padding:40px 10px;font-size:14px;}
+  .empty .big{font-size:34px;margin-bottom:8px;}
+  .footer-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+  .footer-actions .btn{margin-top:0;font-size:13px;padding:11px;flex:1;min-width:120px;}
+  .save-flash{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#06281c;font-weight:800;padding:12px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(52,211,153,.4);opacity:0;pointer-events:none;transition:all .3s;z-index:80;font-size:14px;}
+  .save-flash.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .save-flash.err{background:var(--red);color:#2a0000;}
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:90;padding:18px;}
+  .modal-bg.show{display:flex;}
+  .modal{background:var(--card);border:1px solid var(--line);border-radius:20px;max-width:480px;width:100%;padding:24px;box-shadow:var(--shadow);max-height:90vh;overflow-y:auto;}
+  .modal h3{font-size:18px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+  .modal p.sub{font-size:13px;color:var(--mut);margin-bottom:18px;}
+  .modal .field input{font-size:13px;}
+  .status-row{display:flex;align-items:center;gap:8px;font-size:13px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:16px;}
+  .seg{display:flex;gap:6px;margin-bottom:16px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:4px;}
+  .seg button{flex:1;background:none;border:none;color:var(--mut);font-weight:700;font-size:12.5px;padding:8px;border-radius:7px;cursor:pointer;}
+  .seg button.active{background:var(--card2);color:var(--txt);}
+  .steps{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px 14px 14px 30px;font-size:12.5px;color:var(--mut);margin:8px 0 18px;}
+  .steps li{margin-bottom:7px;}
+  .steps a{color:var(--blue);}
+  .steps code{background:var(--card2);padding:1px 6px;border-radius:5px;color:var(--txt);font-size:11.5px;}
+  .modal-x{float:right;background:none;border:none;color:var(--mut);font-size:22px;cursor:pointer;line-height:1;margin-top:-4px;}
+  .twobtn{display:flex;gap:10px;}
+  .twobtn .btn{margin-top:0;}
+  @media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr);}.grid{grid-template-columns:1fr;}}
+  @media(max-width:480px){body{padding:12px;}.stat .num{font-size:23px;}.brand h1{font-size:18px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="13" rx="2.5"/><path d="M18 8h2a1 1 0 0 1 1 1v9"/><path d="M7 12h6M7 15h4"/></svg></div>
+      <div><h1>Carousel Tracker</h1><p>Your Instagram creator command center</p></div>
+    </div>
+    <div class="head-right">
+      <button class="icon-btn" id="installBtn">⬇️ Install App</button>
+      <button class="icon-btn" id="syncBtn"><span class="dot" id="syncDot"></span><span id="syncLabel">Cloud Sync</span></button>
+      <div class="streak-pill"><span class="fire">🔥</span><span id="streakTxt">0 day streak</span></div>
+    </div>
+  </header>
+
+  <section class="stats">
+    <div class="stat"><span class="ico">📦</span><div class="num" id="sTotal">0</div><div class="lbl">Total Carousels</div><div class="sub" id="sTotalSub">all time</div></div>
+    <div class="stat"><span class="ico">📅</span><div class="num" id="sToday">0</div><div class="lbl">Uploaded Today</div><div class="sub" id="sTodaySub">goal: 1/day</div></div>
+    <div class="stat"><span class="ico">🗓️</span><div class="num" id="sMonth">0</div><div class="lbl">This Month</div><div class="sub" id="sMonthSub">—</div></div>
+    <div class="stat"><span class="ico">👁️</span><div class="num" id="sViews">0</div><div class="lbl">Views (30 days)</div><div class="sub" id="sFollowersSub">+0 followers</div></div>
+  </section>
+
+  <section class="goal-panel">
+    <div class="goal-top">
+      <h2>🎯 Monthly Goal — <span id="goalMonthName">This Month</span></h2>
+      <div class="goal-edit"><span>Target:</span><input type="number" id="goalInput" min="1" value="20" /><span>carousels</span></div>
+    </div>
+    <div class="pbar"><div class="pfill" id="goalFill"></div></div>
+    <div class="goal-meta"><span><b id="goalDone">0</b> done / <b id="goalTarget">20</b> target</span><span id="goalPace">—</span><span><b id="goalPct">0%</b></span></div>
+  </section>
+
+  <div class="grid">
+    <div style="display:flex;flex-direction:column;gap:18px;">
+      <div class="panel">
+        <h2>➕ Log a Carousel</h2>
+        <p class="hint">Track every post — date auto-fills to today.</p>
+        <form id="form">
+          <div class="field"><label>Title / Topic</label><input type="text" id="title" placeholder="e.g. 5 VS Code extensions every dev needs" required /></div>
+          <div class="row2">
+            <div class="field"><label>Date Uploaded</label><input type="date" id="date" required /></div>
+            <div class="field"><label>Niche / Category</label><select id="niche"><option>Coding</option><option>AI / Tools</option><option>Design</option><option>Career</option><option>Productivity</option><option>Other</option></select></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label>👁️ Views</label><input type="number" id="views" min="0" placeholder="0" value="0"/></div>
+            <div class="field"><label>❤️ Likes</label><input type="number" id="likes" min="0" placeholder="0" value="0"/></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label>💾 Saves</label><input type="number" id="saves" min="0" placeholder="0" value="0"/></div>
+            <div class="field"><label>➕ New Followers</label><input type="number" id="followers" min="0" placeholder="0" value="0"/></div>
+          </div>
+          <div class="field"><label>Notes (optional)</label><textarea id="notes" placeholder="What worked? Hook idea, hashtags..."></textarea></div>
+          <button class="btn" type="submit">Add Carousel</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>📋 Carousel History</h2>
+        <p class="hint">All your uploads in one place.</p>
+        <div class="toolbar">
+          <input type="text" id="search" placeholder="🔍 Search title or niche..." />
+          <select id="sort"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="views">Most views</option><option value="followers">Most followers</option></select>
+        </div>
+        <div class="list" id="list"></div>
+        <div class="footer-actions">
+          <button class="btn sec" id="exportBtn">⬇️ Export</button>
+          <button class="btn sec" id="importBtn">⬆️ Import</button>
+          <button class="btn sec" id="clearBtn">🗑️ Clear All</button>
+          <input type="file" id="importFile" accept="application/json" style="display:none" />
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px;">
+      <div class="panel">
+        <h2>📈 Growth Chart</h2>
+        <p class="hint">Cumulative progress over the last 30 days.</p>
+        <div class="lc-tabs">
+          <div class="lc-tab active" data-metric="followers">Followers</div>
+          <div class="lc-tab" data-metric="views">Views</div>
+          <div class="lc-tab" data-metric="cumposts">Carousels</div>
+        </div>
+        <div class="lc-wrap"><svg class="lc" id="lineChart" viewBox="0 0 320 170" preserveAspectRatio="none"></svg></div>
+        <div class="lc-legend" id="lcLegend">—</div>
+      </div>
+      <div class="panel">
+        <div class="chart-head"><div><h2>📊 Uploads — Last 7 Days</h2><p class="hint" style="margin:0;">Consistency builds the algorithm.</p></div></div>
+        <div class="bars" id="bars"></div>
+      </div>
+      <div class="panel">
+        <h2>🚀 30-Day Performance</h2>
+        <p class="hint">Rolling window from today.</p>
+        <div class="mini-grid">
+          <div class="mini"><div class="v" id="m30posts">0</div><div class="k">Carousels</div></div>
+          <div class="mini"><div class="v" id="m30views">0</div><div class="k">Views</div></div>
+          <div class="mini"><div class="v" id="m30foll">0</div><div class="k">Followers</div></div>
+        </div>
+        <div class="mini-grid" style="margin-top:10px;">
+          <div class="mini"><div class="v" id="m30likes">0</div><div class="k">Likes</div></div>
+          <div class="mini"><div class="v" id="m30saves">0</div><div class="k">Saves</div></div>
+          <div class="mini"><div class="v" id="m30avg">0</div><div class="k">Avg views/post</div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>🏆 Best Performer</h2>
+        <p class="hint">Your top carousel by views.</p>
+        <div id="bestBox"><div class="empty" style="padding:18px;">No data yet</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="syncModal">
+  <div class="modal">
+    <button class="modal-x" id="syncClose">✕</button>
+    <h3>☁️ Cloud Sync</h3>
+    <p class="sub">Sync your data across phone, laptop & tablet.</p>
+    <div class="status-row"><span class="dot" id="mDot"></span><span id="mStatus">Not connected</span></div>
+
+    <div class="seg">
+      <button id="modeAuto" class="active">⚡ Auto (this site)</button>
+      <button id="modeFire">🔥 Firebase</button>
+    </div>
+
+    <!-- AUTO MODE -->
+    <div id="autoPane">
+      <div class="field"><label>Sync Code (your private key — same on every device)</label><input type="text" id="autoCode" placeholder="e.g. arman-carousels-9f3k" /></div>
+      <div class="twobtn">
+        <button class="btn" id="autoConnect">🔗 Connect & Sync</button>
+        <button class="btn sec" id="autoDisc" style="flex:0 0 auto;">Disconnect</button>
+      </div>
+      <div class="twobtn" style="margin-top:10px;">
+        <button class="btn sec" id="autoPush">⬆️ Push</button>
+        <button class="btn sec" id="autoPull">⬇️ Pull</button>
+      </div>
+      <p style="font-size:11.5px;color:var(--mut);margin-top:14px;">⚡ Zero setup — works automatically when this app is hosted on <b>Netlify</b>. Just choose a secret sync code and use the same one on all your devices. <span id="autoWarn" style="color:var(--amber);"></span></p>
+    </div>
+
+    <!-- FIREBASE MODE -->
+    <div id="firePane" style="display:none;">
+      <div class="field"><label>Firebase Database URL</label><input type="text" id="dbUrl" placeholder="https://your-project-default-rtdb.firebaseio.com" /></div>
+      <div class="field"><label>Sync Code (your private key)</label><input type="text" id="fireCode" placeholder="e.g. arman-carousels-9f3k" /></div>
+      <div class="twobtn">
+        <button class="btn" id="fireConnect">🔗 Connect & Sync</button>
+        <button class="btn sec" id="fireDisc" style="flex:0 0 auto;">Disconnect</button>
+      </div>
+      <div class="twobtn" style="margin-top:10px;">
+        <button class="btn sec" id="firePush">⬆️ Push</button>
+        <button class="btn sec" id="firePull">⬇️ Pull</button>
+      </div>
+      <details style="margin-top:16px;">
+        <summary style="cursor:pointer;font-weight:700;font-size:13px;">📖 Firebase setup (for GitHub Pages)</summary>
+        <ol class="steps">
+          <li><a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> → <b>Add project</b>.</li>
+          <li><b>Build → Realtime Database → Create Database</b> → <b>Test mode</b>.</li>
+          <li>Copy the URL (<code>https://xxx-default-rtdb.firebaseio.com</code>) above.</li>
+          <li>Pick a secret <b>Sync Code</b>, same on every device → <b>Connect</b>.</li>
+        </ol>
+      </details>
+    </div>
+  </div>
+</div>
+
+<div class="save-flash" id="flash">✓ Saved</div>
+
+<script>
+const KEY='carousel_tracker_v1';
+const GOALKEY='carousel_goal_v1';
+const SYNCKEY='carousel_sync_cfg_v2';
+let data=[];
+let goalTarget=20;
+let lineMetric='followers';
+// sync config: mode 'auto' | 'fire'
+let sync={mode:'auto',code:'',url:'',on:false};
+let pulling=false, syncTimer=null, autoPullTimer=null;
+
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n||0).toLocaleString();
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function daysAgo(n){const d=new Date();d.setDate(d.getDate()-n);return d;}
+function isoToDate(s){return new Date(s+'T00:00:00');}
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function flash(msg,err){const f=$('flash');f.textContent=(err?'⚠️ ':'✓ ')+msg;f.classList.toggle('err',!!err);f.classList.add('show');setTimeout(()=>f.classList.remove('show'),1800);}
+
+function load(){try{data=JSON.parse(localStorage.getItem(KEY))||[];}catch(e){data=[];}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));scheduleSync();}
+function loadGoal(){const g=+localStorage.getItem(GOALKEY);goalTarget=g>0?g:20;$('goalInput').value=goalTarget;}
+function saveGoal(){localStorage.setItem(GOALKEY,goalTarget);}
+function loadSync(){try{const s=JSON.parse(localStorage.getItem(SYNCKEY));if(s){sync.mode=s.mode||'auto';sync.code=s.code||'';sync.url=s.url||'';sync.on=!!s.on;}}catch(e){}}
+function saveSync(){localStorage.setItem(SYNCKEY,JSON.stringify(sync));}
+
+$('date').value=todayStr();
+$('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  data.push({id:Date.now(),title:$('title').value.trim(),date:$('date').value,niche:$('niche').value,views:+$('views').value||0,likes:+$('likes').value||0,saves:+$('saves').value||0,followers:+$('followers').value||0,notes:$('notes').value.trim()});
+  save();e.target.reset();$('date').value=todayStr();$('views').value=$('likes').value=$('saves').value=$('followers').value=0;render();flash('Carousel logged');
+});
+function del(id){if(!confirm('Delete this carousel?'))return;data=data.filter(d=>d.id!==id);save();render();flash('Deleted');}
+
+$('goalInput').addEventListener('input',()=>{goalTarget=+$('goalInput').value||1;saveGoal();renderGoal();scheduleSync();});
+function renderGoal(){
+  const now=new Date();const mk=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  const done=data.filter(d=>d.date.startsWith(mk)).length;const pct=Math.min(100,Math.round(done/goalTarget*100));
+  $('goalMonthName').textContent=now.toLocaleString('en',{month:'long',year:'numeric'});
+  $('goalDone').textContent=done;$('goalTarget').textContent=goalTarget;$('goalPct').textContent=pct+'%';$('goalFill').style.width=pct+'%';
+  const dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();const dayN=now.getDate();const expected=goalTarget/dim*dayN;
+  let pace;if(done>=goalTarget)pace='🎉 Goal smashed!';else if(done>=expected)pace='✅ On track ('+(goalTarget-done)+' to go)';else pace='⏳ Behind by '+Math.ceil(expected-done)+' — push it!';
+  $('goalPace').textContent=pace;
+}
+function computeStats(){
+  const t=todayStr();const now=new Date();const mk=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');const cut30=daysAgo(30);
+  let total=data.length,today=0,month=0,v30=0,f30=0,l30=0,s30=0,p30=0;
+  data.forEach(d=>{if(d.date===t)today++;if(d.date.startsWith(mk))month++;if(isoToDate(d.date)>=cut30){p30++;v30+=d.views;f30+=d.followers;l30+=d.likes;s30+=d.saves;}});
+  $('sTotal').textContent=fmt(total);$('sToday').textContent=today;$('sMonth').textContent=month;$('sViews').textContent=fmt(v30);
+  $('sFollowersSub').textContent='+'+fmt(f30)+' followers';$('sMonthSub').textContent=now.toLocaleString('en',{month:'long'});
+  $('sTotalSub').textContent=total>0?'keep going 🚀':'add your first';$('sTodaySub').textContent=today>=1?'✓ goal hit!':'goal: 1/day';
+  $('m30posts').textContent=p30;$('m30views').textContent=fmt(v30);$('m30foll').textContent=fmt(f30);$('m30likes').textContent=fmt(l30);$('m30saves').textContent=fmt(s30);$('m30avg').textContent=p30?fmt(Math.round(v30/p30)):0;
+  const dates=new Set(data.map(d=>d.date));let streak=0,cur=new Date();
+  for(let i=0;i<3650;i++){const ds=cur.toISOString().slice(0,10);if(dates.has(ds)){streak++;cur.setDate(cur.getDate()-1);}else if(i===0){cur.setDate(cur.getDate()-1);}else break;}
+  $('streakTxt').textContent=streak+' day'+(streak===1?'':'s')+' streak';
+}
+function renderChart(){
+  const bars=$('bars');bars.innerHTML='';const counts=[];
+  for(let i=6;i>=0;i--){const d=daysAgo(i);const ds=d.toISOString().slice(0,10);counts.push({label:d.toLocaleDateString('en',{weekday:'short'}).slice(0,2),v:data.filter(x=>x.date===ds).length});}
+  const max=Math.max(1,...counts.map(c=>c.v));
+  counts.forEach(c=>{const col=document.createElement('div');col.className='bar-col';const bar=document.createElement('div');bar.className='bar';bar.style.height=(c.v/max*100)+'%';bar.setAttribute('data-v',c.v+' post'+(c.v===1?'':'s'));if(c.v===0)bar.style.opacity='.25';const lbl=document.createElement('span');lbl.textContent=c.label;col.appendChild(bar);col.appendChild(lbl);bars.appendChild(col);});
+}
+function renderLine(){
+  const svg=$('lineChart');const W=320,H=170,padL=4,padR=4,padT=12,padB=18;const days=30;const pts=[];let labels=[];
+  for(let i=days-1;i>=0;i--){labels.push(daysAgo(i));}
+  const series=labels.map(d=>{const ds=d.toISOString().slice(0,10);const upto=data.filter(x=>x.date<=ds);if(lineMetric==='followers')return upto.reduce((a,b)=>a+b.followers,0);if(lineMetric==='views')return upto.reduce((a,b)=>a+b.views,0);return upto.length;});
+  const max=Math.max(1,...series);const n=series.length;const xw=(W-padL-padR);const yh=(H-padT-padB);
+  series.forEach((v,i)=>{const x=padL+(n===1?xw/2:xw*i/(n-1));const y=padT+yh-(v/max*yh);pts.push([x,y]);});
+  const linePath=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const areaPath=linePath+` L ${pts[pts.length-1][0].toFixed(1)} ${padT+yh} L ${pts[0][0].toFixed(1)} ${padT+yh} Z`;
+  const last=series[series.length-1],first=series[0];
+  const gridLines=[0,.5,1].map(f=>{const y=padT+yh-f*yh;return `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#262d3d" stroke-width="1"/>`}).join('');
+  svg.innerHTML=`<defs><linearGradient id="lcg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c5cff" stop-opacity="0.45"/><stop offset="100%" stop-color="#7c5cff" stop-opacity="0"/></linearGradient><linearGradient id="lcl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7c5cff"/><stop offset="60%" stop-color="#ff5c8a"/><stop offset="100%" stop-color="#ff9d5c"/></linearGradient></defs>${gridLines}<path d="${areaPath}" fill="url(#lcg)"/><path d="${linePath}" fill="none" stroke="url(#lcl)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="4" fill="#fff" stroke="#ff5c8a" stroke-width="2"/><text x="${padL}" y="${H-4}" fill="#8b93a7" font-size="9">30d ago</text><text x="${W-padR}" y="${H-4}" fill="#8b93a7" font-size="9" text-anchor="end">today</text>`;
+  const gained=last-first;const nm=lineMetric==='followers'?'followers':lineMetric==='views'?'views':'carousels';
+  $('lcLegend').innerHTML=`Total <b style="color:var(--txt)">${fmt(last)}</b> ${nm} · <span style="color:var(--green)">+${fmt(gained)}</span> in 30 days`;
+}
+document.querySelectorAll('.lc-tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.lc-tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');lineMetric=t.dataset.metric;renderLine();}));
+function renderBest(){const box=$('bestBox');if(!data.length){box.innerHTML='<div class="empty" style="padding:18px;">No data yet</div>';return;}const b=[...data].sort((a,c)=>c.views-a.views)[0];box.innerHTML=`<div class="item" style="background:var(--bg2);"><div class="thumb">⭐</div><div class="body"><div class="ttl">${esc(b.title)||'Untitled'}</div><div class="meta"><span>👁️ <b>${fmt(b.views)}</b></span><span>❤️ <b>${fmt(b.likes)}</b></span><span>➕ <b>${fmt(b.followers)}</b></span></div><div class="meta"><span>${b.date} · ${esc(b.niche)}</span></div></div></div>`;}
+function renderList(){const list=$('list');const q=$('search').value.toLowerCase().trim();const sort=$('sort').value;let arr=data.filter(d=>(d.title+' '+d.niche).toLowerCase().includes(q));arr.sort((a,b)=>{if(sort==='new')return b.date.localeCompare(a.date)||b.id-a.id;if(sort==='old')return a.date.localeCompare(b.date)||a.id-b.id;if(sort==='views')return b.views-a.views;if(sort==='followers')return b.followers-a.followers;});if(!arr.length){list.innerHTML=`<div class="empty"><div class="big">📭</div>${data.length?'No matches found':'No carousels yet — log your first one!'}</div>`;return;}list.innerHTML=arr.map(d=>`<div class="item"><div class="thumb">🖼️</div><div class="body"><div class="ttl">${esc(d.title)||'Untitled'} <span class="tag">${esc(d.niche)}</span></div><div class="meta"><span>📅 ${d.date}</span><span>👁️ <b>${fmt(d.views)}</b></span><span>❤️ <b>${fmt(d.likes)}</b></span><span>💾 <b>${fmt(d.saves)}</b></span><span>➕ <b>${fmt(d.followers)}</b></span></div>${d.notes?`<div class="meta"><span>📝 ${esc(d.notes)}</span></div>`:''}</div><button class="del" onclick="del(${d.id})" title="Delete">✕</button></div>`).join('');}
+function render(){computeStats();renderGoal();renderChart();renderLine();renderBest();renderList();}
+$('search').addEventListener('input',renderList);
+$('sort').addEventListener('change',renderList);
+
+$('exportBtn').addEventListener('click',()=>{const payload={data,goalTarget,exported:new Date().toISOString()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='carousel-tracker-'+todayStr()+'.json';a.click();flash('Exported');});
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result);const arr=Array.isArray(p)?p:p.data;if(!Array.isArray(arr))throw 0;data=arr;if(p.goalTarget){goalTarget=p.goalTarget;saveGoal();$('goalInput').value=goalTarget;}save();render();flash('Imported '+arr.length+' items');}catch(err){flash('Invalid file',true);}};r.readAsText(f);e.target.value='';});
+$('clearBtn').addEventListener('click',()=>{if(!data.length)return;if(confirm('Delete ALL carousel data? This cannot be undone.')){data=[];save();render();flash('All cleared');}});
+
+/* ============ CLOUD SYNC ============ */
+function cleanCode(c){return (c||'').trim().replace(/[^a-zA-Z0-9_\-]/g,'').slice(0,64);}
+function endpoint(){
+  if(sync.mode==='fire'){return sync.url.replace(/\/+$/,'')+'/carousels/'+encodeURIComponent(sync.code)+'.json';}
+  return './api/sync?code='+encodeURIComponent(sync.code); // auto (netlify function)
+}
+function setSyncUI(){
+  const on=sync.on;
+  $('syncBtn').classList.toggle('live',on);
+  $('syncDot').className='dot'+(on?' on':'');
+  $('syncLabel').textContent=on?'Synced':'Cloud Sync';
+  $('mDot').className='dot'+(on?' on':'');
+  $('mStatus').textContent=on?('Connected ('+(sync.mode==='fire'?'Firebase':'Auto')+') · code "'+sync.code+'"'):'Not connected';
+  // mode panes
+  const auto=sync.mode!=='fire';
+  $('modeAuto').classList.toggle('active',auto);$('modeFire').classList.toggle('active',!auto);
+  $('autoPane').style.display=auto?'':'none';$('firePane').style.display=auto?'none':'';
+  $('autoCode').value=sync.mode!=='fire'?sync.code:'';
+  $('fireCode').value=sync.mode==='fire'?sync.code:'';$('dbUrl').value=sync.url;
+  // warn if auto mode but not on netlify (file:// or github pages)
+  const isLocal=location.protocol==='file:';
+  $('autoWarn').textContent=isLocal?' (You\'re opening the file directly — Auto sync needs the deployed Netlify URL.)':'';
+}
+async function pushCloud(silent){
+  if(!sync.on)return;
+  try{
+    const res=await fetch(endpoint(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({data,goalTarget,updated:Date.now()})});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    if(!silent)flash('Pushed to cloud');$('syncDot').className='dot on';$('mDot').className='dot on';
+  }catch(e){$('syncDot').className='dot err';$('mDot').className='dot err';if(!silent)flash('Push failed: '+e.message,true);}
+}
+async function pullCloud(silent){
+  if(!sync.code){if(!silent)flash('Enter a sync code first',true);return false;}
+  if(sync.mode==='fire'&&!sync.url){if(!silent)flash('Enter Firebase URL first',true);return false;}
+  try{
+    pulling=true;const res=await fetch(endpoint(),{cache:'no-store'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const j=await res.json();
+    if(j&&Array.isArray(j.data)){data=j.data;localStorage.setItem(KEY,JSON.stringify(data));if(j.goalTarget){goalTarget=j.goalTarget;saveGoal();$('goalInput').value=goalTarget;}render();if(!silent)flash('Pulled from cloud');return true;}
+    if(!silent)flash('No cloud data yet — push first');return false;
+  }catch(e){$('mDot').className='dot err';if(!silent)flash('Pull failed: '+e.message,true);return false;}
+  finally{pulling=false;}
+}
+function scheduleSync(){if(!sync.on||pulling)return;clearTimeout(syncTimer);syncTimer=setTimeout(()=>pushCloud(true),900);}
+function startAutoPull(){stopAutoPull();autoPullTimer=setInterval(()=>{if(sync.on&&document.visibilityState==='visible')pullCloud(true);},60000);}
+function stopAutoPull(){if(autoPullTimer)clearInterval(autoPullTimer);}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&sync.on)pullCloud(true);});
+
+// modal open/close + mode switch
+$('syncBtn').addEventListener('click',()=>{$('syncModal').classList.add('show');setSyncUI();});
+$('syncClose').addEventListener('click',()=>$('syncModal').classList.remove('show'));
+$('syncModal').addEventListener('click',e=>{if(e.target===$('syncModal'))$('syncModal').classList.remove('show');});
+$('modeAuto').addEventListener('click',()=>{sync.mode='auto';setSyncUI();});
+$('modeFire').addEventListener('click',()=>{sync.mode='fire';setSyncUI();});
+
+async function connect(){
+  const got=await pullCloud(true);
+  if(!got)await pushCloud(true);
+  flash('Cloud sync connected ✓');startAutoPull();
+}
+// AUTO handlers
+$('autoConnect').addEventListener('click',async()=>{const code=cleanCode($('autoCode').value);if(!code){flash('Enter a sync code',true);return;}sync.mode='auto';sync.code=code;sync.on=true;saveSync();setSyncUI();await connect();});
+$('autoDisc').addEventListener('click',()=>{sync.on=false;saveSync();setSyncUI();stopAutoPull();flash('Disconnected (data kept offline)');});
+$('autoPush').addEventListener('click',()=>{const code=cleanCode($('autoCode').value);if(!code){flash('Enter a sync code',true);return;}sync.mode='auto';sync.code=code;sync.on=true;saveSync();setSyncUI();pushCloud(false);startAutoPull();});
+$('autoPull').addEventListener('click',()=>{const code=cleanCode($('autoCode').value);if(!code){flash('Enter a sync code',true);return;}sync.mode='auto';sync.code=code;saveSync();pullCloud(false);});
+// FIREBASE handlers
+$('fireConnect').addEventListener('click',async()=>{const url=$('dbUrl').value.trim();const code=cleanCode($('fireCode').value);if(!url||!code){flash('Enter URL and code',true);return;}if(!/^https:\/\/.+firebase/i.test(url)){flash('That doesn\'t look like a Firebase URL',true);return;}sync.mode='fire';sync.url=url;sync.code=code;sync.on=true;saveSync();setSyncUI();await connect();});
+$('fireDisc').addEventListener('click',()=>{sync.on=false;saveSync();setSyncUI();stopAutoPull();flash('Disconnected (data kept offline)');});
+$('firePush').addEventListener('click',()=>{const url=$('dbUrl').value.trim();const code=cleanCode($('fireCode').value);if(!url||!code){flash('Enter URL and code',true);return;}sync.mode='fire';sync.url=url;sync.code=code;sync.on=true;saveSync();setSyncUI();pushCloud(false);startAutoPull();});
+$('firePull').addEventListener('click',()=>{const url=$('dbUrl').value.trim();const code=cleanCode($('fireCode').value);if(!url||!code){flash('Enter URL and code',true);return;}sync.mode='fire';sync.url=url;sync.code=code;saveSync();pullCloud(false);});
+
+/* ============ PWA ============ */
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').style.display='flex';});
+$('installBtn').addEventListener('click',async()=>{if(!deferredPrompt){flash('Use browser menu → "Add to Home Screen"');return;}deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').style.display='none';});
+window.addEventListener('appinstalled',()=>{$('installBtn').style.display='none';flash('App installed 🎉');});
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{});});}
+
+/* ============ seed ============ */
+function seedIfEmpty(){
+  if(localStorage.getItem(KEY)!==null)return;
+  const sample=[
+    {title:'5 VS Code extensions every dev needs',niche:'Coding',views:18400,likes:1240,saves:890,followers:210,off:1},
+    {title:'How I use ChatGPT to code faster',niche:'AI / Tools',views:32100,likes:2980,saves:1740,followers:540,off:3},
+    {title:'Git commands you actually use',niche:'Coding',views:9800,likes:610,saves:430,followers:95,off:6},
+    {title:'My desk setup as a dev',niche:'Productivity',views:14200,likes:1100,saves:300,followers:160,off:10},
+    {title:'7 free APIs for side projects',niche:'AI / Tools',views:21500,likes:1700,saves:1200,followers:380,off:16},
+    {title:'Landing your first dev job',niche:'Career',views:12700,likes:980,saves:760,followers:240,off:23}
+  ];
+  data=sample.map((s,i)=>({id:Date.now()+i,title:s.title,niche:s.niche,views:s.views,likes:s.likes,saves:s.saves,followers:s.followers,date:daysAgo(s.off).toISOString().slice(0,10),notes:''}));
+  localStorage.setItem(KEY,JSON.stringify(data));
+}
+
+// init
+load();seedIfEmpty();load();loadGoal();loadSync();setSyncUI();render();
+if(sync.on){pullCloud(true).then(()=>startAutoPull());}
+</script>
+</body>
+</html>
