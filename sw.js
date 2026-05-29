@@ -1,5 +1,5 @@
 /* Carousel Tracker service worker */
-const CACHE = 'carousel-tracker-v3';
+const CACHE = 'carousel-tracker-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -24,7 +24,6 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = req.url;
-  // Never cache sync/network calls — always go to network
   if (url.includes('/api/sync') || url.includes('/.netlify/functions') ||
       url.includes('firebaseio') || url.includes('googleapis') || url.includes('gstatic')) return;
   e.respondWith(
@@ -34,4 +33,13 @@ self.addEventListener('fetch', e => {
       return res;
     }).catch(() => caches.match('./index.html')))
   );
+});
+
+// Allow notification clicks to focus/open the app
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const c of list) { if ('focus' in c) return c.focus(); }
+    if (clients.openWindow) return clients.openWindow('./index.html');
+  }));
 });

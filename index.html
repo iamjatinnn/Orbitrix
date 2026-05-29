@@ -83,7 +83,7 @@
   .bar{width:100%;max-width:34px;background:var(--grad);border-radius:7px 7px 3px 3px;min-height:4px;transition:height .4s ease;position:relative;}
   .bar:hover::after{content:attr(data-v);position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:#000;color:#fff;font-size:11px;padding:2px 7px;border-radius:6px;white-space:nowrap;}
   .bar-col span{font-size:10.5px;color:var(--mut);}
-  .lc-tabs{display:flex;gap:6px;margin-bottom:12px;}
+  .lc-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .lc-tab{font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:var(--mut);cursor:pointer;}
   .lc-tab.active{background:var(--card2);color:var(--txt);border-color:var(--accent);}
   .lc-wrap{position:relative;}
@@ -96,7 +96,7 @@
   .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
   .toolbar input{flex:1;min-width:140px;background:var(--bg2);border:1px solid var(--line);color:var(--txt);padding:9px 12px;border-radius:10px;font-size:13px;outline:none;}
   .toolbar select{background:var(--bg2);border:1px solid var(--line);color:var(--txt);padding:9px 10px;border-radius:10px;font-size:13px;}
-  .list{display:flex;flex-direction:column;gap:10px;max-height:460px;overflow-y:auto;padding-right:4px;}
+  .list{display:flex;flex-direction:column;gap:10px;max-height:520px;overflow-y:auto;padding-right:4px;}
   .list::-webkit-scrollbar{width:8px;}
   .list::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px;}
   .item{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:13px 14px;display:flex;gap:12px;align-items:flex-start;}
@@ -104,15 +104,54 @@
   .item .body{flex:1;min-width:0;}
   .item .ttl{font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .tag{font-size:10px;padding:2px 8px;border-radius:999px;background:var(--card2);color:var(--mut);border:1px solid var(--line);font-weight:700;}
+  .tag.er{background:rgba(52,211,153,.12);color:var(--green);border-color:rgba(52,211,153,.3);}
+  .tag.er.mid{background:rgba(251,191,36,.12);color:var(--amber);border-color:rgba(251,191,36,.3);}
+  .tag.er.low{background:rgba(248,113,113,.12);color:var(--red);border-color:rgba(248,113,113,.3);}
   .item .meta{font-size:12px;color:var(--mut);margin-top:3px;display:flex;gap:14px;flex-wrap:wrap;}
   .item .meta b{color:var(--txt);}
-  .item .del{background:none;border:none;color:var(--mut);cursor:pointer;font-size:17px;padding:2px 4px;line-height:1;}
-  .item .del:hover{color:var(--red);}
+  .item .acts{display:flex;flex-direction:column;gap:4px;}
+  .item .iconact{background:none;border:none;color:var(--mut);cursor:pointer;font-size:15px;padding:2px 4px;line-height:1;}
+  .item .iconact:hover{color:var(--accent);}
+  .item .iconact.del:hover{color:var(--red);}
   .empty{text-align:center;color:var(--mut);padding:40px 10px;font-size:14px;}
   .empty .big{font-size:34px;margin-bottom:8px;}
   .footer-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
-  .footer-actions .btn{margin-top:0;font-size:13px;padding:11px;flex:1;min-width:120px;}
-  .save-flash{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#06281c;font-weight:800;padding:12px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(52,211,153,.4);opacity:0;pointer-events:none;transition:all .3s;z-index:80;font-size:14px;}
+  .footer-actions .btn{margin-top:0;font-size:13px;padding:11px;flex:1;min-width:110px;}
+  .niche-row{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+  .niche-row .nm{font-size:12.5px;font-weight:700;width:88px;flex-shrink:0;}
+  .niche-row .track{flex:1;height:18px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;overflow:hidden;}
+  .niche-row .fillb{height:100%;border-radius:999px;transition:width .5s;}
+  .niche-row .val{font-size:11.5px;color:var(--mut);width:74px;text-align:right;flex-shrink:0;}
+  .ntabs{display:flex;gap:6px;margin-bottom:14px;}
+  .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px;}
+  .badge{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;opacity:.38;filter:grayscale(1);transition:.3s;position:relative;}
+  .badge.un{opacity:1;filter:none;border-color:var(--accent);box-shadow:0 4px 16px rgba(124,92,255,.25);}
+  .badge .be{font-size:26px;display:block;margin-bottom:4px;}
+  .badge .bn{font-size:10.5px;font-weight:700;line-height:1.25;}
+  .badge .bd{font-size:9px;color:var(--mut);margin-top:2px;}
+  .cal-wrap{overflow-x:auto;padding-bottom:6px;}
+  .cal{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;min-width:max-content;}
+  .cal .cell{width:13px;height:13px;border-radius:3px;background:var(--bg2);border:1px solid var(--line);}
+  .cal .cell.l1{background:rgba(124,92,255,.35);}
+  .cal .cell.l2{background:rgba(124,92,255,.6);}
+  .cal .cell.l3{background:rgba(255,92,138,.85);}
+  .cal-legend{display:flex;align-items:center;gap:6px;justify-content:flex-end;font-size:10.5px;color:var(--mut);margin-top:10px;}
+  .cal-legend .cell{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  /* idea vault */
+  .idea-form{display:flex;gap:8px;margin-bottom:14px;}
+  .idea-form input{flex:1;background:var(--bg2);border:1px solid var(--line);color:var(--txt);padding:11px 13px;border-radius:11px;font-size:14px;outline:none;}
+  .idea-form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,92,255,.18);}
+  .idea-form select{background:var(--bg2);border:1px solid var(--line);color:var(--txt);padding:0 8px;border-radius:11px;font-size:12px;outline:none;}
+  .idea-form button{background:var(--grad);border:none;color:#fff;font-weight:800;font-size:20px;width:46px;border-radius:11px;cursor:pointer;flex-shrink:0;}
+  .idea{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;}
+  .idea.done{opacity:.5;}
+  .idea.done .itxt{text-decoration:line-through;}
+  .idea .chk{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);background:none;cursor:pointer;flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;}
+  .idea.done .chk{background:var(--green);border-color:var(--green);color:#06281c;}
+  .idea .itxt{flex:1;font-size:13.5px;font-weight:600;min-width:0;word-break:break-word;}
+  .idea .ix{background:none;border:none;color:var(--mut);cursor:pointer;font-size:16px;}
+  .idea .ix:hover{color:var(--red);}
+  .save-flash{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#06281c;font-weight:800;padding:12px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(52,211,153,.4);opacity:0;pointer-events:none;transition:all .3s;z-index:120;font-size:14px;}
   .save-flash.show{opacity:1;transform:translateX(-50%) translateY(0);}
   .save-flash.err{background:var(--red);color:#2a0000;}
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:90;padding:18px;}
@@ -132,6 +171,8 @@
   .modal-x{float:right;background:none;border:none;color:var(--mut);font-size:22px;cursor:pointer;line-height:1;margin-top:-4px;}
   .twobtn{display:flex;gap:10px;}
   .twobtn .btn{margin-top:0;}
+  .recap-preview{width:100%;border-radius:14px;border:1px solid var(--line);display:block;margin-bottom:14px;background:var(--bg2);}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:130;display:none;}
   @media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr);}.grid{grid-template-columns:1fr;}}
   @media(max-width:480px){body{padding:12px;}.stat .num{font-size:23px;}.brand h1{font-size:18px;}}
 </style>
@@ -144,8 +185,10 @@
       <div><h1>Carousel Tracker</h1><p>Your Instagram creator command center</p></div>
     </div>
     <div class="head-right">
-      <button class="icon-btn" id="installBtn">⬇️ Install App</button>
-      <button class="icon-btn" id="syncBtn"><span class="dot" id="syncDot"></span><span id="syncLabel">Cloud Sync</span></button>
+      <button class="icon-btn" id="installBtn">⬇️ Install</button>
+      <button class="icon-btn" id="recapBtn">📸 Recap</button>
+      <button class="icon-btn" id="remindBtn"><span class="dot" id="remindDot"></span>🔔 Remind</button>
+      <button class="icon-btn" id="syncBtn"><span class="dot" id="syncDot"></span><span id="syncLabel">Sync</span></button>
       <div class="streak-pill"><span class="fire">🔥</span><span id="streakTxt">0 day streak</span></div>
     </div>
   </header>
@@ -154,7 +197,7 @@
     <div class="stat"><span class="ico">📦</span><div class="num" id="sTotal">0</div><div class="lbl">Total Carousels</div><div class="sub" id="sTotalSub">all time</div></div>
     <div class="stat"><span class="ico">📅</span><div class="num" id="sToday">0</div><div class="lbl">Uploaded Today</div><div class="sub" id="sTodaySub">goal: 1/day</div></div>
     <div class="stat"><span class="ico">🗓️</span><div class="num" id="sMonth">0</div><div class="lbl">This Month</div><div class="sub" id="sMonthSub">—</div></div>
-    <div class="stat"><span class="ico">👁️</span><div class="num" id="sViews">0</div><div class="lbl">Views (30 days)</div><div class="sub" id="sFollowersSub">+0 followers</div></div>
+    <div class="stat"><span class="ico">📊</span><div class="num" id="sEng">0%</div><div class="lbl">Avg Engagement</div><div class="sub" id="sEngSub">last 30 days</div></div>
   </section>
 
   <section class="goal-panel">
@@ -189,23 +232,62 @@
           <button class="btn" type="submit">Add Carousel</button>
         </form>
       </div>
+
+      <div class="panel">
+        <h2>💡 Content Idea Vault</h2>
+        <p class="hint">Dump future carousel ideas. Tick them off when posted.</p>
+        <form class="idea-form" id="ideaForm">
+          <input type="text" id="ideaText" placeholder="e.g. 10 Git commands every dev needs" required />
+          <select id="ideaNiche"><option>Coding</option><option>AI / Tools</option><option>Design</option><option>Career</option><option>Productivity</option><option>Other</option></select>
+          <button type="submit" title="Add idea">+</button>
+        </form>
+        <div class="list" id="ideaList" style="max-height:300px;"></div>
+      </div>
+
       <div class="panel">
         <h2>📋 Carousel History</h2>
-        <p class="hint">All your uploads in one place.</p>
+        <p class="hint">Tap ✏️ to edit, ✕ to delete. ER = engagement rate.</p>
         <div class="toolbar">
           <input type="text" id="search" placeholder="🔍 Search title or niche..." />
-          <select id="sort"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="views">Most views</option><option value="followers">Most followers</option></select>
+          <select id="sort"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="views">Most views</option><option value="followers">Most followers</option><option value="eng">Best engagement</option></select>
         </div>
         <div class="list" id="list"></div>
         <div class="footer-actions">
-          <button class="btn sec" id="exportBtn">⬇️ Export</button>
+          <button class="btn sec" id="exportBtn">⬇️ JSON</button>
+          <button class="btn sec" id="csvBtn">📊 CSV</button>
           <button class="btn sec" id="importBtn">⬆️ Import</button>
-          <button class="btn sec" id="clearBtn">🗑️ Clear All</button>
+          <button class="btn sec" id="clearBtn">🗑️ Clear</button>
           <input type="file" id="importFile" accept="application/json" style="display:none" />
         </div>
       </div>
     </div>
+
     <div style="display:flex;flex-direction:column;gap:18px;">
+      <div class="panel">
+        <h2>🏆 Achievements</h2>
+        <p class="hint" id="achHint">Unlock badges by staying consistent.</p>
+        <div class="badges" id="badges"></div>
+      </div>
+
+      <div class="panel">
+        <h2>🗓️ Posting Calendar</h2>
+        <p class="hint">Your last ~17 weeks — keep the squares lit. 🔥</p>
+        <div class="cal-wrap"><div class="cal" id="cal"></div></div>
+        <div class="cal-legend">Less <span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell l3"></span> More</div>
+      </div>
+
+      <div class="panel">
+        <h2>🥧 Niche Breakdown</h2>
+        <p class="hint">Which topics perform best — make more of what wins.</p>
+        <div class="ntabs lc-tabs">
+          <div class="lc-tab active" data-nm="views">Views</div>
+          <div class="lc-tab" data-nm="followers">Followers</div>
+          <div class="lc-tab" data-nm="count">Posts</div>
+          <div class="lc-tab" data-nm="eng">Engagement</div>
+        </div>
+        <div id="nicheBox"></div>
+      </div>
+
       <div class="panel">
         <h2>📈 Growth Chart</h2>
         <p class="hint">Cumulative progress over the last 30 days.</p>
@@ -236,7 +318,7 @@
         </div>
       </div>
       <div class="panel">
-        <h2>🏆 Best Performer</h2>
+        <h2>🥇 Best Performer</h2>
         <p class="hint">Your top carousel by views.</p>
         <div id="bestBox"><div class="empty" style="padding:18px;">No data yet</div></div>
       </div>
@@ -244,19 +326,78 @@
   </div>
 </div>
 
+<!-- EDIT MODAL -->
+<div class="modal-bg" id="editModal">
+  <div class="modal">
+    <button class="modal-x" id="editClose">✕</button>
+    <h3>✏️ Edit Carousel</h3>
+    <p class="sub">Update stats as your post grows over time.</p>
+    <form id="editForm">
+      <input type="hidden" id="eId" />
+      <div class="field"><label>Title / Topic</label><input type="text" id="eTitle" required /></div>
+      <div class="row2">
+        <div class="field"><label>Date Uploaded</label><input type="date" id="eDate" required /></div>
+        <div class="field"><label>Niche / Category</label><select id="eNiche"><option>Coding</option><option>AI / Tools</option><option>Design</option><option>Career</option><option>Productivity</option><option>Other</option></select></div>
+      </div>
+      <div class="row3">
+        <div class="field"><label>👁️ Views</label><input type="number" id="eViews" min="0"/></div>
+        <div class="field"><label>❤️ Likes</label><input type="number" id="eLikes" min="0"/></div>
+      </div>
+      <div class="row3">
+        <div class="field"><label>💾 Saves</label><input type="number" id="eSaves" min="0"/></div>
+        <div class="field"><label>➕ New Followers</label><input type="number" id="eFollowers" min="0"/></div>
+      </div>
+      <div class="field"><label>Notes</label><textarea id="eNotes"></textarea></div>
+      <div class="twobtn">
+        <button class="btn" type="submit">💾 Save Changes</button>
+        <button class="btn sec" type="button" id="editCancel" style="flex:0 0 auto;">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- REMINDER MODAL -->
+<div class="modal-bg" id="remindModal">
+  <div class="modal">
+    <button class="modal-x" id="remindClose">✕</button>
+    <h3>🔔 Daily Reminder</h3>
+    <p class="sub">Get a nudge to post — "Did you post a carousel today?"</p>
+    <div class="status-row"><span class="dot" id="rDot"></span><span id="rStatus">Reminder off</span></div>
+    <div class="field"><label>Remind me every day at</label><input type="time" id="remindTime" value="19:00" /></div>
+    <div class="twobtn">
+      <button class="btn" id="remindEnable">🔔 Turn On</button>
+      <button class="btn sec" id="remindDisable" style="flex:0 0 auto;">Turn Off</button>
+    </div>
+    <button class="btn sec" id="remindTest" style="margin-top:10px;">🔍 Send a test notification</button>
+    <p style="font-size:11.5px;color:var(--mut);margin-top:14px;">📱 For best results, <b>install the app</b> (Add to Home Screen) and open it at least once a day — the reminder fires while the app is open or running in the background. On iPhone, install to Home Screen first to allow notifications. <span id="remindWarn" style="color:var(--amber);"></span></p>
+  </div>
+</div>
+
+<!-- RECAP MODAL -->
+<div class="modal-bg" id="recapModal">
+  <div class="modal">
+    <button class="modal-x" id="recapClose">✕</button>
+    <h3>📸 Weekly Recap Card</h3>
+    <p class="sub">A shareable image of your week — perfect for your Story.</p>
+    <canvas id="recapCanvas" class="recap-preview" width="1080" height="1920"></canvas>
+    <div class="twobtn">
+      <button class="btn" id="recapDownload">⬇️ Download Image</button>
+      <button class="btn sec" id="recapShare" style="flex:0 0 auto;">📤 Share</button>
+    </div>
+  </div>
+</div>
+
+<!-- CLOUD SYNC MODAL -->
 <div class="modal-bg" id="syncModal">
   <div class="modal">
     <button class="modal-x" id="syncClose">✕</button>
     <h3>☁️ Cloud Sync</h3>
     <p class="sub">Sync your data across phone, laptop & tablet.</p>
     <div class="status-row"><span class="dot" id="mDot"></span><span id="mStatus">Not connected</span></div>
-
     <div class="seg">
       <button id="modeAuto" class="active">⚡ Auto (this site)</button>
       <button id="modeFire">🔥 Firebase</button>
     </div>
-
-    <!-- AUTO MODE -->
     <div id="autoPane">
       <div class="field"><label>Sync Code (your private key — same on every device)</label><input type="text" id="autoCode" placeholder="e.g. arman-carousels-9f3k" /></div>
       <div class="twobtn">
@@ -269,8 +410,6 @@
       </div>
       <p style="font-size:11.5px;color:var(--mut);margin-top:14px;">⚡ Zero setup — works automatically when this app is hosted on <b>Netlify</b>. Just choose a secret sync code and use the same one on all your devices. <span id="autoWarn" style="color:var(--amber);"></span></p>
     </div>
-
-    <!-- FIREBASE MODE -->
     <div id="firePane" style="display:none;">
       <div class="field"><label>Firebase Database URL</label><input type="text" id="dbUrl" placeholder="https://your-project-default-rtdb.firebaseio.com" /></div>
       <div class="field"><label>Sync Code (your private key)</label><input type="text" id="fireCode" placeholder="e.g. arman-carousels-9f3k" /></div>
@@ -295,18 +434,25 @@
   </div>
 </div>
 
+<canvas id="confetti"></canvas>
 <div class="save-flash" id="flash">✓ Saved</div>
 
 <script>
 const KEY='carousel_tracker_v1';
 const GOALKEY='carousel_goal_v1';
 const SYNCKEY='carousel_sync_cfg_v2';
+const ACHKEY='carousel_ach_v1';
+const IDEAKEY='carousel_ideas_v1';
+const REMINDKEY='carousel_remind_v1';
 let data=[];
+let ideas=[];
 let goalTarget=20;
 let lineMetric='followers';
-// sync config: mode 'auto' | 'fire'
+let nicheMetric='views';
+let unlocked={};
 let sync={mode:'auto',code:'',url:'',on:false};
-let pulling=false, syncTimer=null, autoPullTimer=null;
+let remind={on:false,time:'19:00',lastFired:''};
+let pulling=false, syncTimer=null, autoPullTimer=null, remindTimer=null;
 
 const $=id=>document.getElementById(id);
 const fmt=n=>Number(n||0).toLocaleString();
@@ -315,11 +461,19 @@ function daysAgo(n){const d=new Date();d.setDate(d.getDate()-n);return d;}
 function isoToDate(s){return new Date(s+'T00:00:00');}
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function flash(msg,err){const f=$('flash');f.textContent=(err?'⚠️ ':'✓ ')+msg;f.classList.toggle('err',!!err);f.classList.add('show');setTimeout(()=>f.classList.remove('show'),1800);}
+function erOf(d){return d.views>0?((d.likes+d.saves)/d.views*100):0;}
+function erClass(er){return er>=8?'':er>=3?'mid':'low';}
 
 function load(){try{data=JSON.parse(localStorage.getItem(KEY))||[];}catch(e){data=[];}}
 function save(){localStorage.setItem(KEY,JSON.stringify(data));scheduleSync();}
 function loadGoal(){const g=+localStorage.getItem(GOALKEY);goalTarget=g>0?g:20;$('goalInput').value=goalTarget;}
 function saveGoal(){localStorage.setItem(GOALKEY,goalTarget);}
+function loadAch(){try{unlocked=JSON.parse(localStorage.getItem(ACHKEY))||{};}catch(e){unlocked={};}}
+function saveAch(){localStorage.setItem(ACHKEY,JSON.stringify(unlocked));}
+function loadIdeas(){try{ideas=JSON.parse(localStorage.getItem(IDEAKEY))||[];}catch(e){ideas=[];}}
+function saveIdeas(){localStorage.setItem(IDEAKEY,JSON.stringify(ideas));scheduleSync();}
+function loadRemind(){try{const r=JSON.parse(localStorage.getItem(REMINDKEY));if(r){remind.on=!!r.on;remind.time=r.time||'19:00';remind.lastFired=r.lastFired||'';}}catch(e){}}
+function saveRemind(){localStorage.setItem(REMINDKEY,JSON.stringify(remind));}
 function loadSync(){try{const s=JSON.parse(localStorage.getItem(SYNCKEY));if(s){sync.mode=s.mode||'auto';sync.code=s.code||'';sync.url=s.url||'';sync.on=!!s.on;}}catch(e){}}
 function saveSync(){localStorage.setItem(SYNCKEY,JSON.stringify(sync));}
 
@@ -331,7 +485,42 @@ $('form').addEventListener('submit',e=>{
 });
 function del(id){if(!confirm('Delete this carousel?'))return;data=data.filter(d=>d.id!==id);save();render();flash('Deleted');}
 
-$('goalInput').addEventListener('input',()=>{goalTarget=+$('goalInput').value||1;saveGoal();renderGoal();scheduleSync();});
+/* ---------- EDIT ---------- */
+function openEdit(id){
+  const d=data.find(x=>x.id===id);if(!d)return;
+  $('eId').value=d.id;$('eTitle').value=d.title;$('eDate').value=d.date;$('eNiche').value=d.niche;
+  $('eViews').value=d.views;$('eLikes').value=d.likes;$('eSaves').value=d.saves;$('eFollowers').value=d.followers;$('eNotes').value=d.notes||'';
+  $('editModal').classList.add('show');
+}
+$('editForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const id=+$('eId').value;const d=data.find(x=>x.id===id);if(!d)return;
+  d.title=$('eTitle').value.trim();d.date=$('eDate').value;d.niche=$('eNiche').value;
+  d.views=+$('eViews').value||0;d.likes=+$('eLikes').value||0;d.saves=+$('eSaves').value||0;d.followers=+$('eFollowers').value||0;d.notes=$('eNotes').value.trim();
+  save();render();$('editModal').classList.remove('show');flash('Changes saved');
+});
+$('editClose').addEventListener('click',()=>$('editModal').classList.remove('show'));
+$('editCancel').addEventListener('click',()=>$('editModal').classList.remove('show'));
+$('editModal').addEventListener('click',e=>{if(e.target===$('editModal'))$('editModal').classList.remove('show');});
+
+/* ---------- IDEA VAULT ---------- */
+$('ideaForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const t=$('ideaText').value.trim();if(!t)return;
+  ideas.unshift({id:Date.now(),text:t,niche:$('ideaNiche').value,done:false});
+  saveIdeas();$('ideaText').value='';renderIdeas();flash('Idea saved');
+});
+function ideaToggle(id){const i=ideas.find(x=>x.id===id);if(!i)return;i.done=!i.done;saveIdeas();renderIdeas();}
+function ideaDel(id){ideas=ideas.filter(x=>x.id!==id);saveIdeas();renderIdeas();flash('Idea removed');}
+function ideaUse(id){const i=ideas.find(x=>x.id===id);if(!i)return;$('title').value=i.text;$('niche').value=i.niche;$('title').scrollIntoView({behavior:'smooth',block:'center'});$('title').focus();flash('Loaded into form ✏️');}
+function renderIdeas(){
+  const box=$('ideaList');
+  const pend=ideas.filter(i=>!i.done).length;
+  if(!ideas.length){box.innerHTML='<div class="empty" style="padding:24px;"><div class="big">💡</div>No ideas yet — add your first!</div>';return;}
+  box.innerHTML=ideas.map(i=>`<div class="idea ${i.done?'done':''}"><button class="chk" onclick="ideaToggle(${i.id})" title="Mark posted">✓</button><div class="itxt" onclick="ideaUse(${i.id})" title="Click to load into the log form">${esc(i.text)} <span class="tag" style="margin-left:4px;">${esc(i.niche)}</span></div><button class="ix" onclick="ideaDel(${i.id})" title="Delete">✕</button></div>`).join('');
+}
+
+$('goalInput').addEventListener('input',()=>{goalTarget=+$('goalInput').value||1;saveGoal();renderGoal();checkAchievements();scheduleSync();});
 function renderGoal(){
   const now=new Date();const mk=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
   const done=data.filter(d=>d.date.startsWith(mk)).length;const pct=Math.min(100,Math.round(done/goalTarget*100));
@@ -345,13 +534,17 @@ function computeStats(){
   const t=todayStr();const now=new Date();const mk=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');const cut30=daysAgo(30);
   let total=data.length,today=0,month=0,v30=0,f30=0,l30=0,s30=0,p30=0;
   data.forEach(d=>{if(d.date===t)today++;if(d.date.startsWith(mk))month++;if(isoToDate(d.date)>=cut30){p30++;v30+=d.views;f30+=d.followers;l30+=d.likes;s30+=d.saves;}});
-  $('sTotal').textContent=fmt(total);$('sToday').textContent=today;$('sMonth').textContent=month;$('sViews').textContent=fmt(v30);
-  $('sFollowersSub').textContent='+'+fmt(f30)+' followers';$('sMonthSub').textContent=now.toLocaleString('en',{month:'long'});
+  $('sTotal').textContent=fmt(total);$('sToday').textContent=today;$('sMonth').textContent=month;
+  const er30=v30>0?((l30+s30)/v30*100):0;
+  $('sEng').textContent=er30.toFixed(1)+'%';
+  $('sEngSub').textContent=er30>=8?'🔥 excellent!':er30>=3?'👍 solid':'keep pushing';
+  $('sMonthSub').textContent=now.toLocaleString('en',{month:'long'});
   $('sTotalSub').textContent=total>0?'keep going 🚀':'add your first';$('sTodaySub').textContent=today>=1?'✓ goal hit!':'goal: 1/day';
   $('m30posts').textContent=p30;$('m30views').textContent=fmt(v30);$('m30foll').textContent=fmt(f30);$('m30likes').textContent=fmt(l30);$('m30saves').textContent=fmt(s30);$('m30avg').textContent=p30?fmt(Math.round(v30/p30)):0;
   const dates=new Set(data.map(d=>d.date));let streak=0,cur=new Date();
   for(let i=0;i<3650;i++){const ds=cur.toISOString().slice(0,10);if(dates.has(ds)){streak++;cur.setDate(cur.getDate()-1);}else if(i===0){cur.setDate(cur.getDate()-1);}else break;}
   $('streakTxt').textContent=streak+' day'+(streak===1?'':'s')+' streak';
+  return {total,streak,v30,f30,er30,month};
 }
 function renderChart(){
   const bars=$('bars');bars.innerHTML='';const counts=[];
@@ -373,45 +566,290 @@ function renderLine(){
   const gained=last-first;const nm=lineMetric==='followers'?'followers':lineMetric==='views'?'views':'carousels';
   $('lcLegend').innerHTML=`Total <b style="color:var(--txt)">${fmt(last)}</b> ${nm} · <span style="color:var(--green)">+${fmt(gained)}</span> in 30 days`;
 }
-document.querySelectorAll('.lc-tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.lc-tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');lineMetric=t.dataset.metric;renderLine();}));
-function renderBest(){const box=$('bestBox');if(!data.length){box.innerHTML='<div class="empty" style="padding:18px;">No data yet</div>';return;}const b=[...data].sort((a,c)=>c.views-a.views)[0];box.innerHTML=`<div class="item" style="background:var(--bg2);"><div class="thumb">⭐</div><div class="body"><div class="ttl">${esc(b.title)||'Untitled'}</div><div class="meta"><span>👁️ <b>${fmt(b.views)}</b></span><span>❤️ <b>${fmt(b.likes)}</b></span><span>➕ <b>${fmt(b.followers)}</b></span></div><div class="meta"><span>${b.date} · ${esc(b.niche)}</span></div></div></div>`;}
-function renderList(){const list=$('list');const q=$('search').value.toLowerCase().trim();const sort=$('sort').value;let arr=data.filter(d=>(d.title+' '+d.niche).toLowerCase().includes(q));arr.sort((a,b)=>{if(sort==='new')return b.date.localeCompare(a.date)||b.id-a.id;if(sort==='old')return a.date.localeCompare(b.date)||a.id-b.id;if(sort==='views')return b.views-a.views;if(sort==='followers')return b.followers-a.followers;});if(!arr.length){list.innerHTML=`<div class="empty"><div class="big">📭</div>${data.length?'No matches found':'No carousels yet — log your first one!'}</div>`;return;}list.innerHTML=arr.map(d=>`<div class="item"><div class="thumb">🖼️</div><div class="body"><div class="ttl">${esc(d.title)||'Untitled'} <span class="tag">${esc(d.niche)}</span></div><div class="meta"><span>📅 ${d.date}</span><span>👁️ <b>${fmt(d.views)}</b></span><span>❤️ <b>${fmt(d.likes)}</b></span><span>💾 <b>${fmt(d.saves)}</b></span><span>➕ <b>${fmt(d.followers)}</b></span></div>${d.notes?`<div class="meta"><span>📝 ${esc(d.notes)}</span></div>`:''}</div><button class="del" onclick="del(${d.id})" title="Delete">✕</button></div>`).join('');}
-function render(){computeStats();renderGoal();renderChart();renderLine();renderBest();renderList();}
+document.querySelectorAll('.lc-tab[data-metric]').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.lc-tab[data-metric]').forEach(x=>x.classList.remove('active'));t.classList.add('active');lineMetric=t.dataset.metric;renderLine();}));
+
+const NICHE_COLORS={'Coding':'#7c5cff','AI / Tools':'#ff5c8a','Design':'#38bdf8','Career':'#fbbf24','Productivity':'#34d399','Other':'#8b93a7'};
+function renderNiche(){
+  const box=$('nicheBox');
+  if(!data.length){box.innerHTML='<div class="empty" style="padding:18px;">No data yet</div>';return;}
+  const map={};
+  data.forEach(d=>{const k=d.niche||'Other';if(!map[k])map[k]={views:0,followers:0,count:0,likes:0,saves:0};map[k].views+=d.views;map[k].followers+=d.followers;map[k].count++;map[k].likes+=d.likes;map[k].saves+=d.saves;});
+  let rows=Object.entries(map).map(([k,v])=>{
+    let val;
+    if(nicheMetric==='views')val=v.views;
+    else if(nicheMetric==='followers')val=v.followers;
+    else if(nicheMetric==='count')val=v.count;
+    else val=v.views>0?((v.likes+v.saves)/v.views*100):0;
+    return {k,val,raw:v};
+  }).sort((a,b)=>b.val-a.val);
+  const max=Math.max(1,...rows.map(r=>r.val));
+  box.innerHTML=rows.map(r=>{
+    const w=Math.max(3,r.val/max*100);
+    const disp=nicheMetric==='eng'?r.val.toFixed(1)+'%':fmt(Math.round(r.val));
+    const c=NICHE_COLORS[r.k]||'#8b93a7';
+    return `<div class="niche-row"><div class="nm">${esc(r.k)}</div><div class="track"><div class="fillb" style="width:${w}%;background:${c};"></div></div><div class="val">${disp}</div></div>`;
+  }).join('');
+}
+document.querySelectorAll('.lc-tab[data-nm]').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.lc-tab[data-nm]').forEach(x=>x.classList.remove('active'));t.classList.add('active');nicheMetric=t.dataset.nm;renderNiche();}));
+
+function renderCalendar(){
+  const cal=$('cal');cal.innerHTML='';
+  const counts={};data.forEach(d=>{counts[d.date]=(counts[d.date]||0)+1;});
+  const weeks=17;const total=weeks*7;
+  const today=new Date();const end=new Date(today);
+  const start=new Date(today);start.setDate(start.getDate()-(total-1));
+  const pad=start.getDay();start.setDate(start.getDate()-pad);
+  const cells=[];const cur=new Date(start);
+  while(cur<=end){const ds=cur.toISOString().slice(0,10);const c=counts[ds]||0;cells.push({ds,c});cur.setDate(cur.getDate()+1);}
+  cells.forEach(cell=>{
+    const div=document.createElement('div');
+    let lvl='';if(cell.c>=3)lvl='l3';else if(cell.c===2)lvl='l2';else if(cell.c===1)lvl='l1';
+    div.className='cell '+lvl;
+    div.title=cell.ds+' · '+cell.c+' post'+(cell.c===1?'':'s');
+    cal.appendChild(div);
+  });
+}
+
+const ACHIEVEMENTS=[
+  {id:'first',e:'🌱',n:'First Post',d:'Log 1',test:s=>s.total>=1},
+  {id:'ten',e:'📦',n:'10 Carousels',d:'Log 10',test:s=>s.total>=10},
+  {id:'fifty',e:'🚀',n:'50 Carousels',d:'Log 50',test:s=>s.total>=50},
+  {id:'hundred',e:'💯',n:'Century',d:'Log 100',test:s=>s.total>=100},
+  {id:'streak3',e:'🔥',n:'3-Day Streak',d:'3 in a row',test:s=>s.streak>=3},
+  {id:'streak7',e:'⚡',n:'Week Warrior',d:'7-day streak',test:s=>s.streak>=7},
+  {id:'streak30',e:'👑',n:'Unstoppable',d:'30-day streak',test:s=>s.streak>=30},
+  {id:'v10k',e:'👁️',n:'10K Views',d:'10K in 30d',test:s=>s.v30>=10000},
+  {id:'v100k',e:'🌟',n:'100K Club',d:'100K in 30d',test:s=>s.v30>=100000},
+  {id:'f100',e:'➕',n:'100 Followers',d:'+100 in 30d',test:s=>s.f30>=100},
+  {id:'f1k',e:'🎯',n:'1K Growth',d:'+1K in 30d',test:s=>s.f30>=1000},
+  {id:'eng8',e:'❤️',n:'High Engage',d:'8%+ ER',test:s=>s.er30>=8},
+  {id:'goal',e:'🏅',n:'Goal Crusher',d:'Hit monthly goal',test:s=>s.month>=goalTarget&&goalTarget>0},
+];
+function renderBadges(stats){
+  const wrap=$('badges');let count=0;
+  wrap.innerHTML=ACHIEVEMENTS.map(a=>{const got=!!unlocked[a.id];if(got)count++;return `<div class="badge ${got?'un':''}"><span class="be">${a.e}</span><div class="bn">${a.n}</div><div class="bd">${a.d}</div></div>`;}).join('');
+  $('achHint').textContent=count+' / '+ACHIEVEMENTS.length+' unlocked — keep grinding! 💪';
+}
+function checkAchievements(){
+  const stats=lastStats||computeStats();let newly=[];
+  ACHIEVEMENTS.forEach(a=>{if(!unlocked[a.id]&&a.test(stats)){unlocked[a.id]=Date.now();newly.push(a);}});
+  if(newly.length){saveAch();renderBadges(stats);const a=newly[newly.length-1];flash('Badge unlocked: '+a.e+' '+a.n);fireConfetti();}
+  else renderBadges(stats);
+}
+
+function fireConfetti(){
+  const cv=$('confetti');const ctx=cv.getContext('2d');cv.style.display='block';
+  cv.width=innerWidth;cv.height=innerHeight;
+  const cols=['#7c5cff','#ff5c8a','#ff9d5c','#34d399','#38bdf8','#fbbf24'];
+  let parts=[];for(let i=0;i<120;i++){parts.push({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.3,r:4+Math.random()*5,c:cols[i%cols.length],vy:2+Math.random()*4,vx:-2+Math.random()*4,rot:Math.random()*6,vr:-.2+Math.random()*.4});}
+  let t=0;
+  (function anim(){t++;ctx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.rot+=p.vr;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);ctx.restore();});if(t<160)requestAnimationFrame(anim);else{ctx.clearRect(0,0,cv.width,cv.height);cv.style.display='none';}})();
+}
+
+function renderBest(){const box=$('bestBox');if(!data.length){box.innerHTML='<div class="empty" style="padding:18px;">No data yet</div>';return;}const b=[...data].sort((a,c)=>c.views-a.views)[0];const er=erOf(b);box.innerHTML=`<div class="item" style="background:var(--bg2);"><div class="thumb">⭐</div><div class="body"><div class="ttl">${esc(b.title)||'Untitled'}</div><div class="meta"><span>👁️ <b>${fmt(b.views)}</b></span><span>❤️ <b>${fmt(b.likes)}</b></span><span>➕ <b>${fmt(b.followers)}</b></span><span>📊 <b>${er.toFixed(1)}%</b></span></div><div class="meta"><span>${b.date} · ${esc(b.niche)}</span></div></div></div>`;}
+function renderList(){
+  const list=$('list');const q=$('search').value.toLowerCase().trim();const sort=$('sort').value;
+  let arr=data.filter(d=>(d.title+' '+d.niche).toLowerCase().includes(q));
+  arr.sort((a,b)=>{if(sort==='new')return b.date.localeCompare(a.date)||b.id-a.id;if(sort==='old')return a.date.localeCompare(b.date)||a.id-b.id;if(sort==='views')return b.views-a.views;if(sort==='followers')return b.followers-a.followers;if(sort==='eng')return erOf(b)-erOf(a);});
+  if(!arr.length){list.innerHTML=`<div class="empty"><div class="big">📭</div>${data.length?'No matches found':'No carousels yet — log your first one!'}</div>`;return;}
+  list.innerHTML=arr.map(d=>{const er=erOf(d);return `<div class="item"><div class="thumb">🖼️</div><div class="body"><div class="ttl">${esc(d.title)||'Untitled'} <span class="tag">${esc(d.niche)}</span> <span class="tag er ${erClass(er)}">📊 ${er.toFixed(1)}%</span></div><div class="meta"><span>📅 ${d.date}</span><span>👁️ <b>${fmt(d.views)}</b></span><span>❤️ <b>${fmt(d.likes)}</b></span><span>💾 <b>${fmt(d.saves)}</b></span><span>➕ <b>${fmt(d.followers)}</b></span></div>${d.notes?`<div class="meta"><span>📝 ${esc(d.notes)}</span></div>`:''}</div><div class="acts"><button class="iconact" onclick="openEdit(${d.id})" title="Edit">✏️</button><button class="iconact del" onclick="del(${d.id})" title="Delete">✕</button></div></div>`;}).join('');
+}
+let lastStats=null;
+function render(){lastStats=computeStats();renderGoal();renderChart();renderLine();renderNiche();renderCalendar();renderBest();renderList();renderIdeas();checkAchievements();}
 $('search').addEventListener('input',renderList);
 $('sort').addEventListener('change',renderList);
 
-$('exportBtn').addEventListener('click',()=>{const payload={data,goalTarget,exported:new Date().toISOString()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='carousel-tracker-'+todayStr()+'.json';a.click();flash('Exported');});
+$('exportBtn').addEventListener('click',()=>{const payload={data,goalTarget,ideas,exported:new Date().toISOString()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='carousel-tracker-'+todayStr()+'.json';a.click();flash('Exported JSON');});
+$('csvBtn').addEventListener('click',()=>{
+  const head=['Date','Title','Niche','Views','Likes','Saves','Followers','EngagementRate%','Notes'];
+  const rows=data.map(d=>[d.date,'"'+(d.title||'').replace(/"/g,'""')+'"',d.niche,d.views,d.likes,d.saves,d.followers,erOf(d).toFixed(2),'"'+(d.notes||'').replace(/"/g,'""')+'"'].join(','));
+  const csv=[head.join(','),...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='carousel-tracker-'+todayStr()+'.csv';a.click();flash('Exported CSV');
+});
 $('importBtn').addEventListener('click',()=>$('importFile').click());
-$('importFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result);const arr=Array.isArray(p)?p:p.data;if(!Array.isArray(arr))throw 0;data=arr;if(p.goalTarget){goalTarget=p.goalTarget;saveGoal();$('goalInput').value=goalTarget;}save();render();flash('Imported '+arr.length+' items');}catch(err){flash('Invalid file',true);}};r.readAsText(f);e.target.value='';});
+$('importFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result);const arr=Array.isArray(p)?p:p.data;if(!Array.isArray(arr))throw 0;data=arr;if(p.goalTarget){goalTarget=p.goalTarget;saveGoal();$('goalInput').value=goalTarget;}if(Array.isArray(p.ideas)){ideas=p.ideas;saveIdeas();}save();render();flash('Imported '+arr.length+' items');}catch(err){flash('Invalid file',true);}};r.readAsText(f);e.target.value='';});
 $('clearBtn').addEventListener('click',()=>{if(!data.length)return;if(confirm('Delete ALL carousel data? This cannot be undone.')){data=[];save();render();flash('All cleared');}});
+
+/* ============ DAILY REMINDER ============ */
+function setRemindUI(){
+  const on=remind.on;
+  $('remindDot').className='dot'+(on?' on':'');
+  $('rDot').className='dot'+(on?' on':'');
+  $('rStatus').textContent=on?('Reminder ON · daily at '+remind.time):'Reminder off';
+  $('remindTime').value=remind.time;
+  let warn='';
+  if(!('Notification' in window))warn='Your browser doesn\'t support notifications.';
+  else if(Notification.permission==='denied')warn='Notifications are blocked — enable them in your browser/site settings.';
+  $('remindWarn').textContent=warn;
+}
+function showReminderNotif(body){
+  const title='🔔 Carousel Tracker';
+  const opts={body:body||'Did you post a carousel today? 📲',icon:'./icon.png',badge:'./icon.png',tag:'daily-carousel'};
+  if('Notification' in window && Notification.permission==='granted'){
+    if(navigator.serviceWorker && navigator.serviceWorker.ready){
+      navigator.serviceWorker.ready.then(reg=>reg.showNotification(title,opts)).catch(()=>{try{new Notification(title,opts);}catch(e){}});
+    } else { try{new Notification(title,opts);}catch(e){} }
+    return true;
+  }
+  return false;
+}
+function checkReminder(){
+  if(!remind.on)return;
+  const now=new Date();const hhmm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  const t=todayStr();
+  if(hhmm===remind.time && remind.lastFired!==t){
+    const postedToday=data.some(d=>d.date===t);
+    if(!postedToday){
+      const fired=showReminderNotif('Did you post a carousel today? Keep your '+($('streakTxt').textContent)+' alive! 🔥');
+      if(fired){remind.lastFired=t;saveRemind();}
+    } else {
+      // already posted, mark as handled so we don't nag
+      remind.lastFired=t;saveRemind();
+    }
+  }
+}
+function startReminderLoop(){clearInterval(remindTimer);remindTimer=setInterval(checkReminder,30000);checkReminder();}
+$('remindBtn').addEventListener('click',()=>{$('remindModal').classList.add('show');setRemindUI();});
+$('remindClose').addEventListener('click',()=>$('remindModal').classList.remove('show'));
+$('remindModal').addEventListener('click',e=>{if(e.target===$('remindModal'))$('remindModal').classList.remove('show');});
+$('remindTime').addEventListener('change',()=>{remind.time=$('remindTime').value||'19:00';saveRemind();setRemindUI();});
+$('remindEnable').addEventListener('click',async()=>{
+  if(!('Notification' in window)){flash('Notifications not supported here',true);return;}
+  let perm=Notification.permission;
+  if(perm!=='granted')perm=await Notification.requestPermission();
+  if(perm!=='granted'){flash('Permission denied',true);setRemindUI();return;}
+  remind.on=true;remind.time=$('remindTime').value||'19:00';saveRemind();setRemindUI();startReminderLoop();
+  flash('Reminder on for '+remind.time+' 🔔');
+});
+$('remindDisable').addEventListener('click',()=>{remind.on=false;saveRemind();setRemindUI();clearInterval(remindTimer);flash('Reminder turned off');});
+$('remindTest').addEventListener('click',async()=>{
+  if(!('Notification' in window)){flash('Notifications not supported here',true);return;}
+  let perm=Notification.permission;if(perm!=='granted')perm=await Notification.requestPermission();
+  if(perm!=='granted'){flash('Permission denied',true);setRemindUI();return;}
+  if(showReminderNotif('✅ Test notification — reminders are working!'))flash('Test sent!');else flash('Could not send',true);
+});
+
+/* ============ WEEKLY RECAP CARD ============ */
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function drawRecap(){
+  const cv=$('recapCanvas');const ctx=cv.getContext('2d');const W=1080,H=1920;
+  // weekly stats: last 7 days
+  const cut=daysAgo(7);
+  let posts=0,views=0,foll=0,likes=0,saves=0;
+  data.forEach(d=>{if(isoToDate(d.date)>=cut){posts++;views+=d.views;foll+=d.followers;likes+=d.likes;saves+=d.saves;}});
+  const er=views>0?((likes+saves)/views*100):0;
+  const streak=$('streakTxt').textContent;
+  const best=[...data].filter(d=>isoToDate(d.date)>=cut).sort((a,b)=>b.views-a.views)[0];
+
+  // bg gradient
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#0b0d12');g.addColorStop(1,'#161a24');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // glow blobs
+  const blob=(x,y,r,c)=>{const rg=ctx.createRadialGradient(x,y,0,x,y,r);rg.addColorStop(0,c);rg.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);};
+  blob(900,200,650,'rgba(124,92,255,0.30)');
+  blob(150,1500,700,'rgba(255,92,138,0.22)');
+
+  ctx.textAlign='left';
+  // header
+  // logo square
+  const lg=ctx.createLinearGradient(90,120,170,200);lg.addColorStop(0,'#7c5cff');lg.addColorStop(.6,'#ff5c8a');lg.addColorStop(1,'#ff9d5c');
+  ctx.fillStyle=lg;roundRect(ctx,90,120,90,90,24);ctx.fill();
+  ctx.fillStyle='#fff';ctx.font='800 44px Segoe UI, Arial';ctx.fillText('📊',105,185);
+  ctx.fillStyle='#e8ebf2';ctx.font='800 52px Segoe UI, Arial';ctx.fillText('My Week on IG',200,165);
+  ctx.fillStyle='#8b93a7';ctx.font='600 32px Segoe UI, Arial';ctx.fillText('Carousel Creator Recap',200,205);
+
+  // date range
+  const ds=cut,de=todayStr();
+  ctx.fillStyle='#8b93a7';ctx.font='600 30px Segoe UI, Arial';
+  ctx.fillText(ds+'  →  '+de,90,290);
+
+  // big highlight
+  ctx.fillStyle='#fff';ctx.font='800 200px Segoe UI, Arial';ctx.fillText(posts,90,520);
+  ctx.fillStyle='#ff9d5c';ctx.font='700 46px Segoe UI, Arial';ctx.fillText('carousels posted this week',95,585);
+
+  // stat cards
+  const cards=[
+    {e:'👁️',v:fmt(views),k:'Views gained',c:'#7c5cff'},
+    {e:'➕',v:fmt(foll),k:'New followers',c:'#ff5c8a'},
+    {e:'📊',v:er.toFixed(1)+'%',k:'Engagement rate',c:'#34d399'},
+    {e:'🔥',v:streak.split(' ')[0],k:'Day streak',c:'#fbbf24'},
+  ];
+  let cy=680;const cardW=(W-90-90-40)/2, cardH=240;
+  cards.forEach((c,i)=>{
+    const col=i%2, row=Math.floor(i/2);
+    const x=90+col*(cardW+40), y=cy+row*(cardH+40);
+    ctx.fillStyle='rgba(255,255,255,0.04)';roundRect(ctx,x,y,cardW,cardH,28);ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=2;roundRect(ctx,x,y,cardW,cardH,28);ctx.stroke();
+    ctx.font='70px Segoe UI, Arial';ctx.fillText(c.e,x+40,y+95);
+    ctx.fillStyle=c.c;ctx.font='800 78px Segoe UI, Arial';ctx.fillText(c.v,x+40,y+180);
+    ctx.fillStyle='#8b93a7';ctx.font='600 30px Segoe UI, Arial';ctx.fillText(c.k,x+40,y+222);
+  });
+
+  // best post
+  let by=cy+2*cardH+80+40;
+  if(best){
+    ctx.fillStyle='rgba(124,92,255,0.12)';roundRect(ctx,90,by,W-180,300,28);ctx.fill();
+    ctx.strokeStyle='rgba(124,92,255,0.4)';ctx.lineWidth=2;roundRect(ctx,90,by,W-180,300,28);ctx.stroke();
+    ctx.fillStyle='#ff9d5c';ctx.font='700 34px Segoe UI, Arial';ctx.fillText('🥇 TOP CAROUSEL',130,by+70);
+    ctx.fillStyle='#fff';ctx.font='800 44px Segoe UI, Arial';
+    let title=best.title||'Untitled';
+    // wrap title
+    const maxW=W-260;let line='';let ty=by+140;const words=title.split(' ');
+    for(const w of words){const test=line+w+' ';if(ctx.measureText(test).width>maxW){ctx.fillText(line.trim(),130,ty);line=w+' ';ty+=56;if(ty>by+200)break;}else line=test;}
+    ctx.fillText(line.trim(),130,ty);
+    ctx.fillStyle='#8b93a7';ctx.font='600 34px Segoe UI, Arial';
+    ctx.fillText('👁️ '+fmt(best.views)+'    ❤️ '+fmt(best.likes)+'    💾 '+fmt(best.saves),130,by+260);
+  } else {
+    ctx.fillStyle='rgba(255,255,255,0.04)';roundRect(ctx,90,by,W-180,160,28);ctx.fill();
+    ctx.fillStyle='#8b93a7';ctx.font='600 38px Segoe UI, Arial';ctx.fillText('Post this week to see your top carousel!',130,by+95);
+  }
+
+  // footer
+  ctx.fillStyle='#8b93a7';ctx.font='600 32px Segoe UI, Arial';ctx.textAlign='center';
+  ctx.fillText('Tracked with Carousel Tracker 📊',W/2,H-90);
+  ctx.textAlign='left';
+}
+$('recapBtn').addEventListener('click',()=>{$('recapModal').classList.add('show');drawRecap();});
+$('recapClose').addEventListener('click',()=>$('recapModal').classList.remove('show'));
+$('recapModal').addEventListener('click',e=>{if(e.target===$('recapModal'))$('recapModal').classList.remove('show');});
+$('recapDownload').addEventListener('click',()=>{const cv=$('recapCanvas');const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download='carousel-recap-'+todayStr()+'.png';a.click();flash('Recap downloaded 📸');});
+$('recapShare').addEventListener('click',async()=>{
+  const cv=$('recapCanvas');
+  try{
+    const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+    const file=new File([blob],'carousel-recap.png',{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:'My Week on Instagram',text:'My carousel creator recap 📊'});
+    } else { flash('Sharing not supported — use Download',true); }
+  }catch(e){ if(e.name!=='AbortError') flash('Could not share — use Download',true); }
+});
 
 /* ============ CLOUD SYNC ============ */
 function cleanCode(c){return (c||'').trim().replace(/[^a-zA-Z0-9_\-]/g,'').slice(0,64);}
 function endpoint(){
   if(sync.mode==='fire'){return sync.url.replace(/\/+$/,'')+'/carousels/'+encodeURIComponent(sync.code)+'.json';}
-  return './api/sync?code='+encodeURIComponent(sync.code); // auto (netlify function)
+  return './api/sync?code='+encodeURIComponent(sync.code);
 }
 function setSyncUI(){
   const on=sync.on;
   $('syncBtn').classList.toggle('live',on);
   $('syncDot').className='dot'+(on?' on':'');
-  $('syncLabel').textContent=on?'Synced':'Cloud Sync';
+  $('syncLabel').textContent=on?'Synced':'Sync';
   $('mDot').className='dot'+(on?' on':'');
   $('mStatus').textContent=on?('Connected ('+(sync.mode==='fire'?'Firebase':'Auto')+') · code "'+sync.code+'"'):'Not connected';
-  // mode panes
   const auto=sync.mode!=='fire';
   $('modeAuto').classList.toggle('active',auto);$('modeFire').classList.toggle('active',!auto);
   $('autoPane').style.display=auto?'':'none';$('firePane').style.display=auto?'none':'';
   $('autoCode').value=sync.mode!=='fire'?sync.code:'';
   $('fireCode').value=sync.mode==='fire'?sync.code:'';$('dbUrl').value=sync.url;
-  // warn if auto mode but not on netlify (file:// or github pages)
   const isLocal=location.protocol==='file:';
   $('autoWarn').textContent=isLocal?' (You\'re opening the file directly — Auto sync needs the deployed Netlify URL.)':'';
 }
 async function pushCloud(silent){
   if(!sync.on)return;
   try{
-    const res=await fetch(endpoint(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({data,goalTarget,updated:Date.now()})});
+    const res=await fetch(endpoint(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({data,goalTarget,unlocked,ideas,updated:Date.now()})});
     if(!res.ok)throw new Error('HTTP '+res.status);
     if(!silent)flash('Pushed to cloud');$('syncDot').className='dot on';$('mDot').className='dot on';
   }catch(e){$('syncDot').className='dot err';$('mDot').className='dot err';if(!silent)flash('Push failed: '+e.message,true);}
@@ -423,7 +861,7 @@ async function pullCloud(silent){
     pulling=true;const res=await fetch(endpoint(),{cache:'no-store'});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const j=await res.json();
-    if(j&&Array.isArray(j.data)){data=j.data;localStorage.setItem(KEY,JSON.stringify(data));if(j.goalTarget){goalTarget=j.goalTarget;saveGoal();$('goalInput').value=goalTarget;}render();if(!silent)flash('Pulled from cloud');return true;}
+    if(j&&Array.isArray(j.data)){data=j.data;localStorage.setItem(KEY,JSON.stringify(data));if(j.goalTarget){goalTarget=j.goalTarget;saveGoal();$('goalInput').value=goalTarget;}if(j.unlocked){unlocked=j.unlocked;saveAch();}if(Array.isArray(j.ideas)){ideas=j.ideas;localStorage.setItem(IDEAKEY,JSON.stringify(ideas));}render();if(!silent)flash('Pulled from cloud');return true;}
     if(!silent)flash('No cloud data yet — push first');return false;
   }catch(e){$('mDot').className='dot err';if(!silent)flash('Pull failed: '+e.message,true);return false;}
   finally{pulling=false;}
@@ -431,26 +869,18 @@ async function pullCloud(silent){
 function scheduleSync(){if(!sync.on||pulling)return;clearTimeout(syncTimer);syncTimer=setTimeout(()=>pushCloud(true),900);}
 function startAutoPull(){stopAutoPull();autoPullTimer=setInterval(()=>{if(sync.on&&document.visibilityState==='visible')pullCloud(true);},60000);}
 function stopAutoPull(){if(autoPullTimer)clearInterval(autoPullTimer);}
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&sync.on)pullCloud(true);});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){if(sync.on)pullCloud(true);checkReminder();}});
 
-// modal open/close + mode switch
 $('syncBtn').addEventListener('click',()=>{$('syncModal').classList.add('show');setSyncUI();});
 $('syncClose').addEventListener('click',()=>$('syncModal').classList.remove('show'));
 $('syncModal').addEventListener('click',e=>{if(e.target===$('syncModal'))$('syncModal').classList.remove('show');});
 $('modeAuto').addEventListener('click',()=>{sync.mode='auto';setSyncUI();});
 $('modeFire').addEventListener('click',()=>{sync.mode='fire';setSyncUI();});
-
-async function connect(){
-  const got=await pullCloud(true);
-  if(!got)await pushCloud(true);
-  flash('Cloud sync connected ✓');startAutoPull();
-}
-// AUTO handlers
+async function connect(){const got=await pullCloud(true);if(!got)await pushCloud(true);flash('Cloud sync connected ✓');startAutoPull();}
 $('autoConnect').addEventListener('click',async()=>{const code=cleanCode($('autoCode').value);if(!code){flash('Enter a sync code',true);return;}sync.mode='auto';sync.code=code;sync.on=true;saveSync();setSyncUI();await connect();});
 $('autoDisc').addEventListener('click',()=>{sync.on=false;saveSync();setSyncUI();stopAutoPull();flash('Disconnected (data kept offline)');});
 $('autoPush').addEventListener('click',()=>{const code=cleanCode($('autoCode').value);if(!code){flash('Enter a sync code',true);return;}sync.mode='auto';sync.code=code;sync.on=true;saveSync();setSyncUI();pushCloud(false);startAutoPull();});
 $('autoPull').addEventListener('click',()=>{const code=cleanCode($('autoCode').value);if(!code){flash('Enter a sync code',true);return;}sync.mode='auto';sync.code=code;saveSync();pullCloud(false);});
-// FIREBASE handlers
 $('fireConnect').addEventListener('click',async()=>{const url=$('dbUrl').value.trim();const code=cleanCode($('fireCode').value);if(!url||!code){flash('Enter URL and code',true);return;}if(!/^https:\/\/.+firebase/i.test(url)){flash('That doesn\'t look like a Firebase URL',true);return;}sync.mode='fire';sync.url=url;sync.code=code;sync.on=true;saveSync();setSyncUI();await connect();});
 $('fireDisc').addEventListener('click',()=>{sync.on=false;saveSync();setSyncUI();stopAutoPull();flash('Disconnected (data kept offline)');});
 $('firePush').addEventListener('click',()=>{const url=$('dbUrl').value.trim();const code=cleanCode($('fireCode').value);if(!url||!code){flash('Enter URL and code',true);return;}sync.mode='fire';sync.url=url;sync.code=code;sync.on=true;saveSync();setSyncUI();pushCloud(false);startAutoPull();});
@@ -479,7 +909,8 @@ function seedIfEmpty(){
 }
 
 // init
-load();seedIfEmpty();load();loadGoal();loadSync();setSyncUI();render();
+load();seedIfEmpty();load();loadGoal();loadAch();loadIdeas();loadRemind();loadSync();setSyncUI();setRemindUI();render();
+if(remind.on)startReminderLoop();
 if(sync.on){pullCloud(true).then(()=>startAutoPull());}
 </script>
 </body>
