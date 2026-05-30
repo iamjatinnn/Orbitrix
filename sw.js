@@ -1,5 +1,5 @@
 /* Carousel Tracker service worker */
-const CACHE = 'carousel-tracker-v4';
+const CACHE = 'orbitrix-v5';
 const ASSETS = [
   './',
   './index.html',

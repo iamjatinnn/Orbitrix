@@ -79,14 +79,22 @@ git push -u origin main
 
 ## ✨ Features
 - 📦 Total / today / this-month carousel counts
+- 📊 Average engagement rate (likes+saves ÷ views)
 - 👁️ 30-day views & ➕ followers tracking
-- 🎯 Custom monthly goal with pace feedback
+- 🎯 Custom monthly goal with pace feedback + 🎊 confetti
 - 📈 Growth line chart (followers / views / carousels)
-- 📊 7-day upload consistency bars + 🔥 streak
-- 🏆 Best performer + searchable/sortable history
-- 📱 Installable PWA (works offline)
+- 🥧 Niche breakdown (views/followers/posts/engagement)
+- 🗓️ GitHub-style posting calendar heatmap
+- 🏆 13 achievement badges (streaks, milestones, growth)
+- 💡 Content Idea Vault — plan future carousels, tap to load into the log form
+- 🔔 Daily reminder notifications ("Did you post today?")
+- 📸 Shareable weekly recap card (auto-generated image for your Story)
+- ✏️ Edit any entry — update stats as posts grow
+- 📊 7-day upload bars + 🔥 streak counter
+- 🥇 Best performer + searchable/sortable history
+- 📱 Installable PWA with maskable icon (fits perfectly after install) — works offline
 - ☁️ Cross-device cloud sync (Auto on Netlify, or Firebase anywhere)
-- ⬇️⬆️ Export / Import JSON backups
+- ⬇️⬆️ Export / Import JSON + 📊 CSV export
 
 ## 🔒 Privacy
 Your data lives in your browser by default. Cloud sync stores data under your secret **Sync Code** — anyone with the same site URL + code can read it, so pick a long, hard-to-guess code (e.g. `arman-carousels-9f3kq2`).
